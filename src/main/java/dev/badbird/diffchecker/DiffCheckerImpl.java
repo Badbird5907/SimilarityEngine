@@ -15,7 +15,12 @@ public class DiffCheckerImpl implements DiffChecker {
     @SneakyThrows
     @Override
     public float getSimilarity(String var1, String var2, Class<? extends DiffEngine> engineClazz) {
-        return engineClazz.getDeclaredConstructor().newInstance().getSimilarity(var1, var2);
+        return getSimilarity(var1, var2, engineClazz.getDeclaredConstructor().newInstance());
+    }
+
+    @Override
+    public float getSimilarity(String var1, String var2, DiffEngine engine) {
+        return engine.getSimilarity(preProcess(var1), preProcess(var2));
     }
 
     @Override
